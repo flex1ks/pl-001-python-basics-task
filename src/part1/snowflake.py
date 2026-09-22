@@ -21,10 +21,9 @@ from .constants import (  # noqa: F401
     NODE_ID_MAX,
     SEQUENCE_ID_MAX,
     TIMESTAMP_MS_MAX,
+    NODE_ID_BITS,
+    SEQUENCE_ID_BITS,
 )
-
-SEQ_BITS = SEQUENCE_ID_MAX.bit_length()
-NODE_BITS = NODE_ID_MAX.bit_length() 
 
 def read_current_millis(epoch_ms: int) -> int:
     """Read the number of milliseconds elapsed since the custom epoch.
@@ -52,7 +51,7 @@ def decode_timestamp_ms(snowflake_id: int, epoch_ms: int = EPOCH_MS_DEFAULT) -> 
         The absolute Unix time in milliseconds at which the identifier was
         generated.
     """
-    return (snowflake_id >> (NODE_BITS + SEQ_BITS)) + epoch_ms
+    return (snowflake_id >> (NODE_ID_BITS + SEQUENCE_ID_BITS)) + epoch_ms
 
 
 def decode_node_id(snowflake_id: int) -> int:
@@ -109,4 +108,4 @@ def generate_snowflake_id(
         timestamp field (roughly 69 years after ``epoch_ms``). In each of those
         cases an explanatory message is printed to stdout first.
     """
-    return (timestamp_ms << (NODE_BITS + SEQ_BITS)) | (node_id << SEQ_BITS) | sequence_id
+    return (timestamp_ms << (NODE_ID_BITS + SEQ_ID_BITS)) | (node_id << SEQ_ID_BITS) | sequence_id
