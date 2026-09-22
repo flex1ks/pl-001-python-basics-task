@@ -108,4 +108,4 @@ def generate_snowflake_id(
         timestamp field (roughly 69 years after ``epoch_ms``). In each of those
         cases an explanatory message is printed to stdout first.
     """
-    return (timestamp_ms << (NODE_ID_BITS + SEQ_ID_BITS)) | (node_id << SEQ_ID_BITS) | sequence_id
+    return (timestamp_ms << (NODE_ID_BITS + SEQ_ID_BITS)) | (node_id << SEQ_ID_BITS) | sequence_id 
